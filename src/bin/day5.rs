@@ -18,22 +18,21 @@ fn main() {
 }
 
 fn react_len(polymer: &[u8]) -> usize {
-	let mut removed_count = 0;
+	let mut polymer = polymer.to_vec();
 	let mut i = 0;
-	let mut j = 1;
-	while j < polymer.len() {
-		if (polymer[i] as i32 - polymer[j] as i32).abs() == (b'a' - b'A') as i32 {
-			removed_count += 2;
-			if i > 0 {
+	while i + 1 < polymer.len() {
+		if (polymer[i] as i32 - polymer[i + 1] as i32).abs() == (b'a' - b'A') as i32 {
+			polymer.remove(i);
+			polymer.remove(i);
+			if i >= 1 {
 				i -= 1;
 			}
 		}
 		else {
-			i = j;
+			i += 1;
 		}
-		j += 1;
 	}
-	polymer.len() - removed_count
+	polymer.len()
 }
 
 fn filter(polymer: &[u8], chr1: u8, chr2: u8) -> Vec<u8> {
